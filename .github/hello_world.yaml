@@ -1,0 +1,24 @@
+name: Hello World Workflow
+# events
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow dispatch: # gives a button that can be clicked to run the workflow instead of pushing / opening pull requests to the branch
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 # an actions provided by github themselves, can utilize any community actions that is available in marketplace or in public repository
+      - name: hello world
+        run: echo "Hello World"
+        shell: bash
+  goodbye:
+    runs-on: ubuntu-latest
+    steps:
+      - name: goodbye world
+        run: echo "Goodbye World"
+        shell: bash
