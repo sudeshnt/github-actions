@@ -39,15 +39,3 @@ jobs:
           URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${ISSUE_NUMBER}/comments"
           RESPONSE=$(curl -X POST -H "Authorization: token $GH_TOKEN" -d "{\"body\":\"$COMMENT\"}" $URL)
           echo $RESPONSE
-
-      # - name: Create comment with API
-      #   run: |
-      #     gh api -X POST https://api.github.com/repos/${ORGANIZATION}/${REPOSITORY}/issues/${ISSUE_NUMBER}/comments -F body='Comment but from the API call not action'
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      #     ORGANIZATION: ${{ github.event.organization.login }}
-      #     REPOSITORY: ${{ github.event.repository.name }}
-      #     ISSUE_NUMBER: ${{ github.event.issue.number }}
-      
-
-      
