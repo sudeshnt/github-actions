@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - main
-  workflow dispatch: # gives a button that can be clicked to run the workflow instead of pushing / opening pull requests to the branch
+  workflow_dispatch: # gives a button that can be clicked to run the workflow instead of pushing / opening pull requests to the branch
 jobs:
   hello:
     runs-on: ubuntu-latest
