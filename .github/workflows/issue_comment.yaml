@@ -27,11 +27,24 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - name: Create comment with API
-        run: |
-          gh api -X POST https://api.github.com/repos/${ORGANIZATION}/${REPOSITORY}/issues/${ISSUE_NUMBER}/comments -F body='Comment but from the API call not action'
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Comment on Issue
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          ORGANIZATION: ${{ github.event.organization.login }}
-          REPOSITORY: ${{ github.event.repository.name }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          ISSUE_NUMBER=$(echo $GITHUB_REF | sed 's/refs\/pull\///')
+          COMMENT="Thank you for creating this pull request!"
+          URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${ISSUE_NUMBER}/comments"
+          RESPONSE=$(curl -X POST -H "Authorization: token $GH_TOKEN" -d "{\"body\":\"$COMMENT\"}" $URL)
+          echo $RESPONSE
+
+      # - name: Create comment with API
+      #   run: |
+      #     gh api -X POST https://api.github.com/repos/${ORGANIZATION}/${REPOSITORY}/issues/${ISSUE_NUMBER}/comments -F body='Comment but from the API call not action'
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      #     ORGANIZATION: ${{ github.event.organization.login }}
+      #     REPOSITORY: ${{ github.event.repository.name }}
+      #     ISSUE_NUMBER: ${{ github.event.issue.number }}
